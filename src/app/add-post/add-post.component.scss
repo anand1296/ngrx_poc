@@ -1,0 +1,16 @@
+.add-post-box {
+    border: 1px solid cornflowerblue;
+    border-radius: 2em;
+    padding: 1em;
+}
+
+.add-post-box .head {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.close-btn {
+    align-self: center;
+    justify-content: end;
+}

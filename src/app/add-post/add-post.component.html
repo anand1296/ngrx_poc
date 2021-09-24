@@ -1,0 +1,36 @@
+<div class="row my-4 add-post-box" [ngStyle]="{'display': closeAddPost ? 'none' : 'block'}">
+    <div class="col-md-12">
+        <div class="head">
+            <div>
+                <h3>Add Post</h3>
+            </div>
+            <div class="close-btn">
+                <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+            </div>
+        </div>
+        <hr/>
+        <form [formGroup]="postForm" (ngSubmit)="onAddPost()">
+            <div class="mb-3">
+                <label>Title</label>
+                <input type="text" class="form-control" formControlName="title">
+                <div *ngIf="postForm.get('title').touched && !postForm.get('title').valid" [ngStyle]="{'color': 'red'}">
+                    <div *ngIf="postForm.get('title').errors?.required">
+                        Title is required
+                    </div>
+                    <div *ngIf="postForm.get('title').errors?.minlength">
+                        Title should be minimum 6 characters
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label>Description</label>
+                <textarea class="form-control" formControlName="description"></textarea>
+                <div [ngStyle]="{'color': 'red'}">{{showDescriptionErrors()}}</div>
+            </div>
+
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary" [disabled]="!postForm.valid">Add Post</button>
+            </div>
+        </form>
+    </div>
+</div>

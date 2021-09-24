@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <h3>Update Post</h3>
+            <hr>
+        </div>
+        <form [formGroup]="postForm" (ngSubmit)="onUpdatePost()">
+            <div class="mb-3">
+                <label>Title</label>
+                <input type="text" class="form-control" formControlName="title">
+                <div [ngStyle]="{'color': 'red'}">{{showErrors('title')}}</div>
+            </div>
+            <div class="mb-3">
+                <label>Description</label>
+                <textarea class="form-control" formControlName="description"></textarea>
+                <div [ngStyle]="{'color': 'red'}">{{showErrors('description')}}</div>
+            </div>
+
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary" [disabled]="!postForm.valid">Update Post</button>
+            </div>
+        </form>
+    </div>
+</div>

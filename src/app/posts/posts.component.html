@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-md-8" *ngIf="!editPost">
+        <h3>Post List</h3>
+        <div>
+            <a href="#" class="btn btn-primary" routerLink='/posts/add' (click)="addPost()" [ngStyle]="{'display': closeAddPost ? '' : 'none'}">Add Post</a>
+        </div>
+        <table class="table table-striped" *ngIf="posts | async as postsData">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let post of postsData; let i = index">
+                    <td>{{post.id}}</td>
+                    <td>{{post.title}}</td>
+                    <td>{{post.description}}</td>
+                    <td>
+                        <button class="btn btn-warning mx-1" (click)="onClickEditPost(post, i)">Edit</button>
+                        <button class="btn btn-danger mx-1" (click)="onClickDeletePost(post)">Delete</button>
+                        <a href="" class="btn btn-info" [routerLink]="['update', post.id]">Update</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-8" *ngIf="editPost">
+        <h3>Post List</h3>
+        <div>
+            <a href="#" class="btn btn-primary" routerLink='/posts/add'>Add Post</a>
+        </div>
+        <form [formGroup]="editedpost">
+            <table class="table table-striped" *ngIf="posts | async as postsData">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let post of postsData; let i=index">
+                        <td>{{post.id}}</td>
+                        <td>
+                            <div *ngIf="i == postIndexToEdit; else post_title">
+                                <input type="text" formControlName="title" class="form-control">
+                                <div [ngStyle]="{'color': 'red'}">{{showErrors('title')}}</div>
+                            </div>
+                            <ng-template #post_title>{{post.title}}</ng-template>
+                        </td>
+                        <td>
+                            <div *ngIf="i == postIndexToEdit; else post_desc">
+                                <textarea type="text" formControlName="description" class="form-control"></textarea>
+                                <div [ngStyle]="{'color': 'red'}">{{showErrors('description')}}</div>
+                            </div>
+                            <ng-template #post_desc>{{post.description}}</ng-template>
+                        </td>
+                        <td class="post_btns">
+                            <div *ngIf="i == postIndexToEdit; else post_buttons">
+                                <button class="btn btn-warning mx-1" (click)="onClickDone(post.id)" [disabled]="!editedpost.valid">Done</button>
+                            </div>
+                            <ng-template #post_buttons>
+                                <button class="btn btn-warning mx-1" (click)="onClickEditPost(post, i)">Edit</button>
+                                <button class="btn btn-danger mx-1" (click)="onClickDeletePost(post)">Delete</button>
+                            </ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <router-outlet></router-outlet>
+    </div>
+</div>
