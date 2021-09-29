@@ -12,7 +12,7 @@
                 <div class="mb-3">
                     <label>Password</label>
                     <div [ngStyle]="{'display': 'flex'}">
-                        <input type="password" class="form-control" formControlName="password" [togglePasswordVisibility] [value]="signUpForm.get('password').value">
+                        <input type="password" class="form-control" formControlName="password" togglePasswordVisibility [value]="signUpForm.get('password').value">
                     </div>
                     <div [ngStyle]="{'color': 'red'}">{{showErrors('password')}}</div>
                 </div>

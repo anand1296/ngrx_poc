@@ -52,4 +52,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  togglePassword(event) {
+    event.preventDefault();
+    this.showPassword = !this.showPassword;
+  }
+
 }

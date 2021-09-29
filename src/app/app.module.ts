@@ -11,10 +11,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { appReducer } from './app.state';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component'
 import { AuthEffects } from './components/auth/state/auth.effects';
 import { PasswordVisibilityTogglerDirective } from './password-visibility-toggler.directive';
+import { AuthTokenInterceptor } from './services/authToken.interceptor'
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { PasswordVisibilityTogglerDirective } from './password-visibility-toggle
       logOnly: environment.production //Restrict extension to log-only mode
     })
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

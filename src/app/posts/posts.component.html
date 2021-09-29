@@ -20,7 +20,7 @@
                     <td>{{post.description}}</td>
                     <td>
                         <button class="btn btn-warning mx-1" (click)="onClickEditPost(post, i)">Edit</button>
-                        <button class="btn btn-danger mx-1" (click)="onClickDeletePost(post)">Delete</button>
+                        <button class="btn btn-danger mx-1" (click)="onClickDeletePost(post.id)">Delete</button>
                         <a href="" class="btn btn-info" [routerLink]="['update', post.id]">Update</a>
                     </td>
                 </tr>

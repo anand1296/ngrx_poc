@@ -11,7 +11,7 @@
             <div class="mb-3">
                 <label>Password</label>
                 <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password">
-                <button (click)="showPassword=!showPassword;" class="btn btn-primary password-toggler"></button>
+                <button (click)="togglePassword($event)" class="btn btn-primary password-toggler"></button>
                 <div [ngStyle]="{'color': 'red'}">{{showErrors('password')}}</div>
             </div>
             <div class="mb-3">

@@ -5,6 +5,7 @@ import { AppState } from '../app.state';
 import { Post } from '../models/posts.model';
 import { addPost } from '../postState/posts.actions';
 import { PostsService } from '../services/posts.service'
+import { setLoadingSpinner } from '../shared/shared.actions';
 
 @Component({
   selector: 'app-add-post',
@@ -46,6 +47,8 @@ export class AddPostComponent implements OnInit, AfterContentChecked {
         title: this.postForm.value.title,
         description: this.postForm.value.description
       };
+      this.service.closeAddPost = this.closeAddPost = true;
+      this.store.dispatch(setLoadingSpinner({status: true}));
       this.store.dispatch(addPost({post}));
       this.postForm.reset();
     }

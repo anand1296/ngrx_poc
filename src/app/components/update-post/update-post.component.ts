@@ -7,6 +7,7 @@ import { AppState } from 'src/app/app.state';
 import { Post } from 'src/app/models/posts.model';
 import { updatePost } from 'src/app/postState/posts.actions';
 import { getPostById } from 'src/app/postState/posts.selectors';
+import { setLoadingSpinner } from 'src/app/shared/shared.actions';
 
 @Component({
   selector: 'app-update-post',
@@ -26,7 +27,7 @@ export class UpdatePostComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       console.log(params.get('id'));
       const id = params.get('id');
-      this.postSubscription = this.store.select(getPostById, {id}).subscribe((data) => {
+      this.postSubscription = this.store.select(getPostById, { id }).subscribe((data) => {
         this.post = data;
         // console.log(this.post);
         this.createForm();
@@ -43,21 +44,21 @@ export class UpdatePostComponent implements OnInit, OnDestroy {
 
   showErrors(field: string) {
     const formField = this.postForm.get(field);
-    const casedFormField = field.charAt(0).toUpperCase()+field.slice(1);
-    if(formField.touched && !formField.valid){
-      if(formField.errors.required) {
-        return casedFormField+' is required'
+    const casedFormField = field.charAt(0).toUpperCase() + field.slice(1);
+    if (formField.touched && !formField.valid) {
+      if (formField.errors.required) {
+        return casedFormField + ' is required'
       }
 
-      if(formField.errors.minlength) {
-        return casedFormField+' should be of minimum 10 characters'
+      if (formField.errors.minlength) {
+        return casedFormField + ' should be of minimum 10 characters'
       }
     }
   }
 
-  onUpdatePost(){
+  onUpdatePost() {
     console.log(this.postForm.value);
-    if(!this.postForm.valid){
+    if (!this.postForm.valid) {
       return;
     }
     else {
@@ -66,15 +67,15 @@ export class UpdatePostComponent implements OnInit, OnDestroy {
         title: this.postForm.value.title,
         description: this.postForm.value.description
       }
-
-      this.store.dispatch(updatePost({post}));
+      this.store.dispatch(setLoadingSpinner({status: true}));
+      this.store.dispatch(updatePost({ post }));
       this.router.navigate(['posts'])
     }
 
   }
 
   ngOnDestroy() {
-    if(this.postSubscription){
+    if (this.postSubscription) {
       this.postSubscription.unsubscribe();
     }
   }
